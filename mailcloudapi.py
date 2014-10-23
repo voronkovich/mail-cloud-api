@@ -169,11 +169,8 @@ class Cloud():
 		for root, dirs, files in os.walk(abs_path):
 		    local_current_dir = root[local_path_length:]
 		    cloud_current_dir = cloud_path + '/' + local_current_dir
-		    print(cloud_current_dir)
 		    self.add_folder(cloud_current_dir)
 		    for file in files:
-			    # print (root + '/' + file)
-			    # print (cloud_current_dir)
 			    self.add_file(root + '/' + file, cloud_current_dir)
 
 	def unshare(self, filename_with_path=""):
