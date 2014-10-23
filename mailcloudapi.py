@@ -1,3 +1,4 @@
+import os
 import json
 import requests
 from urllib import parse
@@ -157,6 +158,23 @@ class Cloud():
 			return self.response.json()["body"][0]["url"]["get"]
 		else:
 			return None
+	
+	def load_folder(self,local_path,cloud_path):
+		"""Load folder into cloud recursively"""
+		abs_path = os.path.abspath(local_path)
+		local_path_length = len(abs_path) + 1
+		
+		self.add_folder(cloud_path)
+		
+		for root, dirs, files in os.walk(abs_path):
+		    local_current_dir = root[local_path_length:]
+		    cloud_current_dir = cloud_path + '/' + local_current_dir
+		    print(cloud_current_dir)
+		    self.add_folder(cloud_current_dir)
+		    for file in files:
+			    # print (root + '/' + file)
+			    # print (cloud_current_dir)
+			    self.add_file(root + '/' + file, cloud_current_dir)
 
 	def unshare(self, filename_with_path=""):
 		"""unshare the file """
